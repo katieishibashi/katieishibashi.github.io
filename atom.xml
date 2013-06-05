@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://katieishibashi.github.io/atom.xml" rel="self"/>
   <link href="http://katieishibashi.github.io/"/>
-  <updated>2013-06-05T13:02:02-04:00</updated>
+  <updated>2013-06-05T13:08:36-04:00</updated>
   <id>http://katieishibashi.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,6 +12,24 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[ZOOM]]></title>
+    <link href="http://katieishibashi.github.io/blog/2013/06/05/zoom/"/>
+    <updated>2013-06-05T13:07:00-04:00</updated>
+    <id>http://katieishibashi.github.io/blog/2013/06/05/zoom</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Goat cheese]]></title>
+    <link href="http://katieishibashi.github.io/blog/2013/06/05/goat-cheese/"/>
+    <updated>2013-06-05T13:07:00-04:00</updated>
+    <id>http://katieishibashi.github.io/blog/2013/06/05/goat-cheese</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Am I doing this right?]]></title>
