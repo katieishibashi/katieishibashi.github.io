@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://katieishibashi.github.io/atom.xml" rel="self"/>
   <link href="http://katieishibashi.github.io/"/>
-  <updated>2013-06-10T18:10:03-04:00</updated>
+  <updated>2013-06-10T18:16:30-04:00</updated>
   <id>http://katieishibashi.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -27,7 +27,7 @@
 <h1>Pros:</h1>
 
 <p>Different strengths
-This includes the obvious, like people knowing languages you don&rsquo;t know, but it&rsquo;s also incredibly beneficial to work with people who think in a different way than you do. I&rsquo;ve only been team coding for a week, and already there have been several times when I&rsquo;ve watched others easily solve problems that had me staring blankly, and vice versa.</p>
+This includes the obvious, like people knowing languages you don&rsquo;t know, but also people who think in a different way than you do. I&rsquo;ve only been team coding for a week, and already there have been several times when I&rsquo;ve watched others easily solve problems that had me staring blankly, and vice versa.</p>
 
 <p>Your random eccentricities don&rsquo;t seep into code as much
 There&rsquo;s no way you could get away with naming a variable George in a group.</p>
@@ -44,7 +44,7 @@ We just wrote a program that tells the user it&rsquo;s deleting their entire har
 Even though it&rsquo;s harder to put your own eccentric touch on code in a group (Hi, George!), you do sometimes get outvoted in a group, and then have to sit there as the group goes down what you view as a strange path. There is very little you can do about this.</p>
 
 <p>When a group gets bogged down, it REALLY gets bogged down
-Taking detours as an individual is bad enough, but taking an irrelevant detour with the weight of four, really hard core people speeding along Detour Road means that you can get SERIOUSLY bogged down, because now you not only have to think about and code the detour, you also sit and discuss said detour. You can write not only write test code to implement your detour, you can write four different versions of it, and then you can sit around discussing  all of them for hours.</p>
+Taking major coding detours as an individual is bad enough, but taking an irrelevant detour with the weight of four, really hard core people speeding along Detour Road means that you can get SERIOUSLY bogged down. You can write not only write test code to implement your detour, you can write four different versions of it, and then you can sit around discussing  all of them for hours.</p>
 ]]></content>
   </entry>
   
