@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://katieishibashi.github.io/atom.xml" rel="self"/>
   <link href="http://katieishibashi.github.io/"/>
-  <updated>2013-06-15T18:20:36-04:00</updated>
+  <updated>2013-06-15T18:25:40-04:00</updated>
   <id>http://katieishibashi.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -24,11 +24,11 @@
 
 <p>I was impressed, however, when I ran across <a href="https://speakerdeck.com/florent2/beautiful-ruby-code-formatting" target="_blank"> this presentation on beautifully formatted Ruby</a> on SpeakerDeck.com . It was really so…beautiful. Even a curmudgeon like myself could appreciate the difference between this:</p>
 
-<p><em>photo1</em></p>
+<p><img src="../images/code_ugly.jpg"></p>
 
 <p>and this:</p>
 
-<p>*photo2</p>
+<p><img src="../images/code_pretty.png"></p>
 
 <p>Rather than slowly try to figure out which piece belongs to which, and what on Earth :record_class is, we have a simple, easy to understand block, with all the relations listed hierarchically, teaching us a great deal about the structure of the code, and the site it supports, in one glance. I&rsquo;ve studied a bit of design and gotten a good appreciation for the importance of things like text alignment and style on the front end of web pages, but have rarely thought about the importance of style on the back end. This provides a fresh perspective &ndash; code doesn&rsquo;t just exist to communicate with computers. After all, the best way to communicate with computers would be a series of 0s and 1s. It&rsquo;s designed to communicate with programmers, and the same visual design rules apply, even if the public never sees it.</p>
 ]]></content>
