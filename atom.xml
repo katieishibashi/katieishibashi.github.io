@@ -4,7 +4,7 @@
   <title><![CDATA[Katie on Rails]]></title>
   <link href="http://katieishibashi.github.io/atom.xml" rel="self"/>
   <link href="http://katieishibashi.github.io/"/>
-  <updated>2013-06-17T13:00:46-04:00</updated>
+  <updated>2013-06-23T12:16:16-04:00</updated>
   <id>http://katieishibashi.github.io/</id>
   <author>
     <name><![CDATA[Katie Barry Ishibashi]]></name>
@@ -12,6 +12,25 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Inside a Sinatra Gem]]></title>
+    <link href="http://katieishibashi.github.io/blog/2013/06/23/inside-a-sinatra-gem/"/>
+    <updated>2013-06-23T12:14:00-04:00</updated>
+    <id>http://katieishibashi.github.io/blog/2013/06/23/inside-a-sinatra-gem</id>
+    <content type="html"><![CDATA[<p>In preparation for learning Sinatra next week, I&rsquo;ve gone poking through through <a href="https://github.com/holman/bubs">this example of a Sinatra gem</a> that I found on Github. It seemed the ideal first investigation. It&rsquo;s simple &ndash; it&rsquo;s only function is to write obnoxious text in a command line to annoy one&rsquo;s coworkers ( a win in itself), and it&rsquo;s named after the character Bubs from The Wire.</p>
+
+<p>The structure reminds me of poking through video game folders on my computer, trying to <strikethrough>cheat</strikethrough> improve my technical skills. In an homage to my video game days, I decided to poke around and try to figure out as much as I could on my own.</p>
+
+<p>The app has two main folders, lib and bin. Lib is clearly the folder that actually does things. Remember, this is an incredibly simple app. It contains exactly one file, which contains exactly one class, Bubs. Bubs&#8217; main job is converting regular text into annoy-text, which it does in only one line: text.tr(&lsquo;A-Za-a1-90&rsquo;, &lsquo;A-Za z1-90&rsquo;) . That&rsquo;s pretty much it, except for a bit of code at the bottom designed to make annoy-text pleasant to all systems.</p>
+
+<p>The bin side is dependent on some code I&rsquo;ve never heard of, so I have to break my no-Google pledge and look it up. ( $stdin can be used to hold code inputted from a console, thank you Ruby Docs.) It looks entirely focused on the outside, taking content from the user, passing it to Bubs for him to work his magic, and then giving it back to the user. It&rsquo;s entirely focused on the user&rsquo;s perspective.</p>
+
+<p>There are also a few files on the root directory. README and LICENSE seem self-explanatory, but there are more mysterious files. There&rsquo;s a Rakefile, which seemed to be concerned with record keeping and checking to make sure things exist and can be connected to. There&rsquo;s also a gemfile, which looks to be concerned with telling whatever interface runs Ruby Gems all it needs to know about itself, and introducing the other files. It tells Gems where its executable files are, gives a list of all its files, and as well as its name/date created/whatever else functions. It is the extroverted greeter of Rootdirectoryland. There&rsquo;s also something called gitignore which seems to be the robots.txt of the git world.</p>
+
+<p>At the end of my exhaustive tour, I feel I&rsquo;ve gained a good sense of the basic files and what they do. Reconnaissance indicates that there are far more complicated structures out there, with folders packed with more folders, but hopefully this basic understanding will carry me through.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Me Code Pretty One Day]]></title>

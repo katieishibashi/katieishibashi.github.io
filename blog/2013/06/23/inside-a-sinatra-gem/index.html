@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Am I doing this right? - Katie on Rails</title>
+  <title>Inside a Sinatra Gem - Katie on Rails</title>
   <meta name="author" content="Katie Barry Ishibashi">
 
   
-  <meta name="description" content="
-">
+  <meta name="description" content="In preparation for learning Sinatra next week, I&rsquo;ve gone poking through through this example of a Sinatra gem that I found on Github. It seemed &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://katieishibashi.github.io/blog/2013/06/05/am-i-doing-this-right">
+  <link rel="canonical" href="http://katieishibashi.github.io/blog/2013/06/23/inside-a-sinatra-gem">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Katie on Rails" type="application/atom+xml">
@@ -69,7 +68,7 @@
   
   <header>
     
-      <h1 class="entry-title">Am I Doing This Right?</h1>
+      <h1 class="entry-title">Inside a Sinatra Gem</h1>
     
     
       <p class="meta">
@@ -85,14 +84,24 @@
   
 
 
-<time datetime="2013-06-05T13:00:00-04:00" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time>
+<time datetime="2013-06-23T12:14:00-04:00" pubdate data-updated="true">Jun 23<span>rd</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content">
+<div class="entry-content"><p>In preparation for learning Sinatra next week, I&rsquo;ve gone poking through through <a href="https://github.com/holman/bubs">this example of a Sinatra gem</a> that I found on Github. It seemed the ideal first investigation. It&rsquo;s simple &ndash; it&rsquo;s only function is to write obnoxious text in a command line to annoy one&rsquo;s coworkers ( a win in itself), and it&rsquo;s named after the character Bubs from The Wire.</p>
+
+<p>The structure reminds me of poking through video game folders on my computer, trying to <strikethrough>cheat</strikethrough> improve my technical skills. In an homage to my video game days, I decided to poke around and try to figure out as much as I could on my own.</p>
+
+<p>The app has two main folders, lib and bin. Lib is clearly the folder that actually does things. Remember, this is an incredibly simple app. It contains exactly one file, which contains exactly one class, Bubs. Bubs&#8217; main job is converting regular text into annoy-text, which it does in only one line: text.tr(&lsquo;A-Za-a1-90&rsquo;, &lsquo;A-Za z1-90&rsquo;) . That&rsquo;s pretty much it, except for a bit of code at the bottom designed to make annoy-text pleasant to all systems.</p>
+
+<p>The bin side is dependent on some code I&rsquo;ve never heard of, so I have to break my no-Google pledge and look it up. ( $stdin can be used to hold code inputted from a console, thank you Ruby Docs.) It looks entirely focused on the outside, taking content from the user, passing it to Bubs for him to work his magic, and then giving it back to the user. It&rsquo;s entirely focused on the user&rsquo;s perspective.</p>
+
+<p>There are also a few files on the root directory. README and LICENSE seem self-explanatory, but there are more mysterious files. There&rsquo;s a Rakefile, which seemed to be concerned with record keeping and checking to make sure things exist and can be connected to. There&rsquo;s also a gemfile, which looks to be concerned with telling whatever interface runs Ruby Gems all it needs to know about itself, and introducing the other files. It tells Gems where its executable files are, gives a list of all its files, and as well as its name/date created/whatever else functions. It is the extroverted greeter of Rootdirectoryland. There&rsquo;s also something called gitignore which seems to be the robots.txt of the git world.</p>
+
+<p>At the end of my exhaustive tour, I feel I&rsquo;ve gained a good sense of the basic files and what they do. Reconnaissance indicates that there are far more complicated structures out there, with folders packed with more folders, but hopefully this basic understanding will carry me through.</p>
 </div>
 
 
@@ -115,7 +124,7 @@
   
 
 
-<time datetime="2013-06-05T13:00:00-04:00" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time>
+<time datetime="2013-06-23T12:14:00-04:00" pubdate data-updated="true">Jun 23<span>rd</span>, 2013</time>
       
 
 
@@ -123,7 +132,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://katieishibashi.github.io/blog/2013/06/05/am-i-doing-this-right/" data-via="" data-counturl="http://katieishibashi.github.io/blog/2013/06/05/am-i-doing-this-right/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://katieishibashi.github.io/blog/2013/06/23/inside-a-sinatra-gem/" data-via="" data-counturl="http://katieishibashi.github.io/blog/2013/06/23/inside-a-sinatra-gem/" >Tweet</a>
   
   
   
@@ -132,10 +141,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/06/05/zombie-ninjas-attack-a-survivors-retrospective/" title="Previous Post: Zombie Ninjas Attack: A survivor's retrospective">&laquo; Zombie Ninjas Attack: A survivor's retrospective</a>
+        <a class="basic-alignment left" href="/blog/2013/06/16/me-code-pretty-one-day/" title="Previous Post: Me Code Pretty One Day">&laquo; Me Code Pretty One Day</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/06/05/goat-cheese/" title="Next Post: Goat cheese">Goat cheese &raquo;</a>
       
     </p>
   </footer>
