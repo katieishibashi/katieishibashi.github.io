@@ -4,7 +4,7 @@
   <title><![CDATA[Katie on Rails]]></title>
   <link href="http://katieishibashi.github.io/atom.xml" rel="self"/>
   <link href="http://katieishibashi.github.io/"/>
-  <updated>2013-07-11T13:44:59-04:00</updated>
+  <updated>2013-07-11T15:41:43-04:00</updated>
   <id>http://katieishibashi.github.io/</id>
   <author>
     <name><![CDATA[Katie Barry Ishibashi]]></name>
@@ -82,7 +82,7 @@
 
 <p>Why subtract latitude from latitude and longitude from longitude? Well, well, the difference between latitude a and latitude b is the distance between them. Granted, it&rsquo;s a difference measured in&hellip;latitude units, but it&rsquo;s a distance nonetheless, and we actually don&rsquo;t need to more precision here. If the distance between my location and station x is .123 latitude units and the distance between my location and station y is .01 latitude units, then station y is closer. That&rsquo;s all we need to know. &ldquo;Latitude units&rdquo; work perfectly well for this purpose.</p>
 
-<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Pythagoras_similar_triangles_simplified.svg/200px-Pythagoras_similar_triangles_simplified.svg.png" style="float:left, padding:5px;">The same logic works perfectly well for longitude, but I didn&rsquo;t initially understand why we were returning latitude<sup>2</sup> and longitude<sup>2</sup>, but then it hit me &ndash; latitude runs perfectly east-west, and longitude runs perfectly north-south. When they meet, they create a perfect right angle, and therefore, we can use&hellip;.Pythagorean theorem. a<sup>2</sup>+b<sup>2</sup>=c<sup>2</sup> . You can get the hypotenuse of a triangle by multiplying the lengths of its sides.</p>
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Pythagoras_similar_triangles_simplified.svg/200px-Pythagoras_similar_triangles_simplified.svg.png" style="float:left; padding:5px;">The same logic works perfectly well for longitude, but I didn&rsquo;t initially understand why we were returning latitude<sup>2</sup> and longitude<sup>2</sup>, but then it hit me &ndash; latitude runs perfectly east-west, and longitude runs perfectly north-south. When they meet, they create a perfect right angle, and therefore, we can use&hellip;.Pythagorean theorem. a<sup>2</sup>+b<sup>2</sup>=c<sup>2</sup> . You can get the hypotenuse of a triangle by multiplying the lengths of its sides.</p>
 
 <p>The advantage of considering the hypotenuse of our right triangles is it lets us perfectly average out our longitude/latitude differences. For example, my location may be very close latitude as a bike station but be very far away in longitude. Or it may be on a similar longitude but on a very different latitude. Or else it may be on a similar latitude and longitude. Whatever. By calculating c <sup>2</sup>, we&rsquo;re averaging out the differences.</p>
 
