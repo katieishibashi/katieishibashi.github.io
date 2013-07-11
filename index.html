@@ -9,7 +9,7 @@
   <meta name="author" content="Katie Barry Ishibashi">
 
   
-  <meta name="description" content="Before learning of Mozilla TowTruck in class today, my experience of real time online collaboration tools had been limited to spreadsheets on Google &hellip;">
+  <meta name="description" content="For my team&rsquo;s presentation to the Ruby meetup, we&rsquo;ve been working on an app that will help people navigate NYC&rsquo;s Citibike program, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,6 +71,110 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/07/11/8th-grade-math-and-navigating-the-globe/">8th Grade Math and Navigating the Globe</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-11T09:19:00-04:00" pubdate data-updated="true">Jul 11<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For my team&rsquo;s presentation to the Ruby meetup, we&rsquo;ve been working on an app  that will help people navigate NYC&rsquo;s Citibike program, using a mashup of Google maps and Citibike&rsquo;s publicly available JSON location data. By way of navigation, the JSON includes street address, latitude, and longitude of each location.</p>
+
+<p>Our initial prototype let users pick start and end points from a dropdown menu of Citibike locations and mapped the distance between them on the map. This was hardly ideal &ndash; very few people orient themselves in a city on the basis of bike locations &ndash; so one of the first things we wanted to give users was the ability to input a street address and have the app automatically find the Citibike stations around them.</p>
+
+<p>It was a sensible idea, albiet one I had no idea how to implement. It was then that my groupmate discovered <a href="http://dangoldin.com/citibike-station-directions/" target="_blank">this implementation</a> of a Citibike/Google maps mashup that does exactly that. Thanks, Internet! We found this in the JavaScript source code:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  function getDistance(lat1,lng1,lat2,lng2) {
+</span><span class='line'>      var i = lat1 - lat2;
+</span><span class='line'>      var j = lng1 - lng2;
+</span><span class='line'>      return i*i + j*j;
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    function findNearestStation(lat,lng) {
+</span><span class='line'>      var min_distance = 99999;
+</span><span class='line'>      var closest_station_id;
+</span><span class='line'>      $.each(stations.stationBeanList, function(i, station) {
+</span><span class='line'>        var distance = getDistance(lat,lng, station.latitude, station.longitude);
+</span><span class='line'>
+</span><span class='line'>        if (distance &lt; min_distance) {
+</span><span class='line'>          min_distance = distance;
+</span><span class='line'>          closest_station_id = i;
+</span><span class='line'>        }
+</span><span class='line'>      });
+</span><span class='line'>
+</span><span class='line'>      console.log('Closest station idx: ' + closest_station_id);
+</span><span class='line'>
+</span><span class='line'>      return stations.stationBeanList[closest_station_id];
+</span><span class='line'>    }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&rsquo;d expected a massive operation, and this was breathtakingly simple. It simply loops through all the stations, gets each one&rsquo;s latitude and longitude, compares the current station to the closest station it has found so far. It was this &ldquo;closeness&rdquo; calculation that I was most interested in. JavaScript was comparing it using a numercal value, but how did it get that number? Well, it&rsquo;s all figured out the closeness of the station using the 5-line getDistance function. getDistance which compares the station&rsquo;s longitude and latitude to the user&rsquo;s using this code:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  var i = lat1 - lat2;
+</span><span class='line'>  var j = lng1 - lng2;
+</span><span class='line'>  return i*i + j*j;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Why subtract latitude from latitude and longitude from longitude? Well, well, the difference between latitude a and latitude b is the distance between them. Granted, it&rsquo;s a difference measured in&hellip;latitude units, but it&rsquo;s a distance nonetheless, and we actually don&rsquo;t need to more precision here. If the distance between my location and station x is .123 latitude units and the distance between my location and station y is .01 latitude units, then station y is closer. That&rsquo;s all we need to know. &ldquo;Latitude units&rdquo; work perfectly well for this purpose.</p>
+
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Pythagoras_similar_triangles_simplified.svg/200px-Pythagoras_similar_triangles_simplified.svg.png" style="float:left, padding:5px;">The same logic works perfectly well for longitude, but I didn&rsquo;t initially understand why we were returning latitude<sup>2</sup> and longitude<sup>2</sup>, but then it hit me &ndash; latitude runs perfectly east-west, and longitude runs perfectly north-south. When they meet, they create a perfect right angle, and therefore, we can use&hellip;.Pythagorean theorem. a<sup>2</sup>+b<sup>2</sup>=c<sup>2</sup> . You can get the hypotenuse of a triangle by multiplying the lengths of its sides.</p>
+
+<p>The advantage of considering the hypotenuse of our right triangles is it lets us perfectly average out our longitude/latitude differences. For example, my location may be very close latitude as a bike station but be very far away in longitude. Or it may be on a similar longitude but on a very different latitude. Or else it may be on a similar latitude and longitude. Whatever. By calculating c <sup>2</sup>, we&rsquo;re averaging out the differences.</p>
+
+<p>And that alone is enough to let us calculate the distance.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/06/25/towing-mozilla/">Towing Mozilla</a></h1>
     
     
@@ -98,7 +202,7 @@
 
 <p>And now, says Mozilla Labs, it is much improved. They’ve released TowTruck, a collaboration tool that enables you to watch as another user’s key and mouse strokes on a web page in the same color-coded, user-labelled ways that Google lets you follow another user’s changes to a spreadsheet on Drive. . It was originally intended as an aid for budding web developers, which lead to its name &ndash; “TowTruck – who you call when you got stuck” . It can be installed by adding a two lines of JavaScript to a page in production, and gives users the option of communicating by text, audio chat, or video. Or at least that is the idea. I was ready to jump on the TowTruck bandwagon until I noticed that <a href="https://towtruck.mozillalabs.com/example/" target="_blank">the main example links</a> on its web site lead to 404s. Newly skeptical, I decided to scour the Internet in search of more insight.</p>
 
-<h2>The Results</h2>
+<h3>The Results</h3>
 
 
 <p>In a nutshell, the online verdict is TowTruck looks promising, but is far from perfect. Mozilla says the system should still be considered “alpha quality” and not yet ready to be used in serious production. <a href="http://www.noupe.com/javascript/mozilla-labs-towtruck-brand-new-real-time-collaboration-tool-tested-76010.html">This excellent review</a> that said TowTruck was indeed surprisingly easy to use. It’s easy to install, to invite collaborators, and audio quality was generally good. The text chat does indeed work across browsers and operating systems, but the audio chat between two computers gets wonky when neither computer is using Firefox. It’s presently only possible to use between two computers, and hasn’t really been tested on mobile.</p>
@@ -462,6 +566,10 @@ Taking major coding detours as an individual is bad enough, but taking an irrele
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/07/11/8th-grade-math-and-navigating-the-globe/">8th Grade Math and Navigating the Globe</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/06/25/towing-mozilla/">Towing Mozilla</a>
       </li>
     
@@ -475,10 +583,6 @@ Taking major coding detours as an individual is bad enough, but taking an irrele
     
       <li class="post">
         <a href="/blog/2013/06/10/playing-well-with-others/">Playing Well With Others</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/05/zoom/">ZOOM</a>
       </li>
     
   </ul>

@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>8th Grade Math and Navigating the Globe - Katie on Rails</title>
+  <meta name="author" content="Katie Barry Ishibashi">
+
+  
+  <meta name="description" content="For my team&rsquo;s presentation to the Ruby meetup, we&rsquo;ve been working on an app that will help people navigate NYC&rsquo;s Citibike program, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://katieishibashi.github.io/blog/2013/07/11/8th-grade-math-and-navigating-the-globe">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Katie on Rails" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Katie on Rails</a></h1>
+  
+    <h2>On Internets and other things</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:katieishibashi.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">8th Grade Math and Navigating the Globe</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-11T09:19:00-04:00" pubdate data-updated="true">Jul 11<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>For my team&rsquo;s presentation to the Ruby meetup, we&rsquo;ve been working on an app  that will help people navigate NYC&rsquo;s Citibike program, using a mashup of Google maps and Citibike&rsquo;s publicly available JSON location data. By way of navigation, the JSON includes street address, latitude, and longitude of each location.</p>
+
+<p>Our initial prototype let users pick start and end points from a dropdown menu of Citibike locations and mapped the distance between them on the map. This was hardly ideal &ndash; very few people orient themselves in a city on the basis of bike locations &ndash; so one of the first things we wanted to give users was the ability to input a street address and have the app automatically find the Citibike stations around them.</p>
+
+<p>It was a sensible idea, albiet one I had no idea how to implement. It was then that my groupmate discovered <a href="http://dangoldin.com/citibike-station-directions/" target="_blank">this implementation</a> of a Citibike/Google maps mashup that does exactly that. Thanks, Internet! We found this in the JavaScript source code:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  function getDistance(lat1,lng1,lat2,lng2) {
+</span><span class='line'>      var i = lat1 - lat2;
+</span><span class='line'>      var j = lng1 - lng2;
+</span><span class='line'>      return i*i + j*j;
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    function findNearestStation(lat,lng) {
+</span><span class='line'>      var min_distance = 99999;
+</span><span class='line'>      var closest_station_id;
+</span><span class='line'>      $.each(stations.stationBeanList, function(i, station) {
+</span><span class='line'>        var distance = getDistance(lat,lng, station.latitude, station.longitude);
+</span><span class='line'>
+</span><span class='line'>        if (distance &lt; min_distance) {
+</span><span class='line'>          min_distance = distance;
+</span><span class='line'>          closest_station_id = i;
+</span><span class='line'>        }
+</span><span class='line'>      });
+</span><span class='line'>
+</span><span class='line'>      console.log('Closest station idx: ' + closest_station_id);
+</span><span class='line'>
+</span><span class='line'>      return stations.stationBeanList[closest_station_id];
+</span><span class='line'>    }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&rsquo;d expected a massive operation, and this was breathtakingly simple. It simply loops through all the stations, gets each one&rsquo;s latitude and longitude, compares the current station to the closest station it has found so far. It was this &ldquo;closeness&rdquo; calculation that I was most interested in. JavaScript was comparing it using a numercal value, but how did it get that number? Well, it&rsquo;s all figured out the closeness of the station using the 5-line getDistance function. getDistance which compares the station&rsquo;s longitude and latitude to the user&rsquo;s using this code:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  var i = lat1 - lat2;
+</span><span class='line'>  var j = lng1 - lng2;
+</span><span class='line'>  return i*i + j*j;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Why subtract latitude from latitude and longitude from longitude? Well, well, the difference between latitude a and latitude b is the distance between them. Granted, it&rsquo;s a difference measured in&hellip;latitude units, but it&rsquo;s a distance nonetheless, and we actually don&rsquo;t need to more precision here. If the distance between my location and station x is .123 latitude units and the distance between my location and station y is .01 latitude units, then station y is closer. That&rsquo;s all we need to know. &ldquo;Latitude units&rdquo; work perfectly well for this purpose.</p>
+
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Pythagoras_similar_triangles_simplified.svg/200px-Pythagoras_similar_triangles_simplified.svg.png" style="float:left, padding:5px;">The same logic works perfectly well for longitude, but I didn&rsquo;t initially understand why we were returning latitude<sup>2</sup> and longitude<sup>2</sup>, but then it hit me &ndash; latitude runs perfectly east-west, and longitude runs perfectly north-south. When they meet, they create a perfect right angle, and therefore, we can use&hellip;.Pythagorean theorem. a<sup>2</sup>+b<sup>2</sup>=c<sup>2</sup> . You can get the hypotenuse of a triangle by multiplying the lengths of its sides.</p>
+
+<p>The advantage of considering the hypotenuse of our right triangles is it lets us perfectly average out our longitude/latitude differences. For example, my location may be very close latitude as a bike station but be very far away in longitude. Or it may be on a similar longitude but on a very different latitude. Or else it may be on a similar latitude and longitude. Whatever. By calculating c <sup>2</sup>, we&rsquo;re averaging out the differences.</p>
+
+<p>And that alone is enough to let us calculate the distance.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Katie Barry Ishibashi</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-11T09:19:00-04:00" pubdate data-updated="true">Jul 11<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://katieishibashi.github.io/blog/2013/07/11/8th-grade-math-and-navigating-the-globe/" data-via="" data-counturl="http://katieishibashi.github.io/blog/2013/07/11/8th-grade-math-and-navigating-the-globe/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/06/25/towing-mozilla/" title="Previous Post: Towing Mozilla">&laquo; Towing Mozilla</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/07/11/8th-grade-math-and-navigating-the-globe/">8th Grade Math and Navigating the Globe</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/25/towing-mozilla/">Towing Mozilla</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/23/inside-a-sinatra-gem/">Inside a Sinatra Gem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/16/me-code-pretty-one-day/">Me Code Pretty One Day</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/10/playing-well-with-others/">Playing Well With Others</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Katie Barry Ishibashi -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
