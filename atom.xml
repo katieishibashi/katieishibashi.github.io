@@ -4,7 +4,7 @@
   <title><![CDATA[Katie on Rails]]></title>
   <link href="http://katieishibashi.github.io/atom.xml" rel="self"/>
   <link href="http://katieishibashi.github.io/"/>
-  <updated>2013-08-01T23:28:30-04:00</updated>
+  <updated>2013-08-01T23:43:14-04:00</updated>
   <id>http://katieishibashi.github.io/</id>
   <author>
     <name><![CDATA[Katie Barry Ishibashi]]></name>
@@ -27,7 +27,7 @@
 <p>I originally investigated this issue at the behest of an international law professor with an anthropology background who wanted me to learn what &ldquo;biases are built into the web&rdquo;. I&rsquo;d initially thought there weren&rsquo;t any, that the web was a just and utopian place. I initially searched for academic articles on the Internet in world affairs. They barely existed, and roughly half of those that did exist were written by <a href="http://timwu.org/" target="_blank">Columbia&rsquo;s Tim Wu</a>. (Thanks, Tim!) I finally realized that
 I could simply take a sampling of foreign newspapers and read their source code online. And with it, I found a number of comments to fellow programmers in characters I could not understand at all, as well as lots and lots of HTML, which I could read perfectly well because they were in essentially in English.</p>
 
-<p>I&rsquo;m not really sure where this leaves us &ndash; there have been fabulous advances in technology since HTML was invented, almost all of which have built on the Romanji, left-to-right technology, and there&rsquo;s clearly no going back. Still, it&rsquo;s worth considering what&rsquo;s been lost. For example, it only <a href="http://techcrunch.com/2010/05/06/web-now-supports-non-latin-characters-for-addresses/" target="_blank">because possible to write URLs in non-Roman characters</a> in 2010. I tried to visit a web page that Tech Crunch linked to as an example of a non-Roman url, but could not, because the reviewer did not understand the address and so entered it as a relative link.</p>
+<p>I&rsquo;m not really sure where this leaves us &ndash; there have been fabulous advances in technology since HTML was invented, almost all of which have built on the Romanji, left-to-right technology, and there&rsquo;s clearly no going back. Still, it&rsquo;s worth considering what&rsquo;s been lost. For example, it only <a href="http://techcrunch.com/2010/05/06/web-now-supports-non-latin-characters-for-addresses/" target="_blank">became possible to write URLs in non-Roman characters</a> in 2010. I tried to visit a web page that Tech Crunch linked to as an example of a non-Roman url, but could not, because the reviewer did not understand the address and so entered it as a relative link.</p>
 
 <p><em>This blog post is based on a <a href="http://katiebarry.com/writing.html#stv_content_13" target ="_blank">paper I wrote in grad school</a> on the Internet and International law, which fed into a <a href="http://katiebarry.com/writing.html#stv_content_14" target ="_blank">thesis on the Internet and democratization</a>. You should read them.</em></p>
 ]]></content>
