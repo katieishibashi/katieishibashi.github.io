@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Stupid Ruby Array Tricks - Katie on Rails</title>
+  <meta name="author" content="Katie Barry Ishibashi">
+
+  
+  <meta name="description" content="While checking out the Ruby katas, I came across a puzzle that involved comparing two arrays, and was on the verge of writing long, convoluted if &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://katieishibashi.github.io/blog/2013/09/05/stupid-ruby-array-tricks">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Katie on Rails" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Katie on Rails</a></h1>
+  
+    <h2>On Internets and other things</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:katieishibashi.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Stupid Ruby Array Tricks</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-05T17:27:00-04:00" pubdate data-updated="true">Sep 5<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>While checking out the <a href="http://onestepback.org/vital_testing/" target="_blank">Ruby katas</a>, I came across a puzzle that involved comparing two arrays, and was on the verge of writing long, convoluted if statements when it occurred to me that any language as elegant as Ruby must have better ways of doing things. Indeed it does. For example:</p>
+
+<h3>Check to see if 2 arrays have any matches, in 3ish lines of code</h3>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>array1=["Cookie Monster","Big Bird", "Grover"]
+</span><span class='line'>array2=["Snuffy","Cookie Monster", "Elmo"]
+</span><span class='line'>intersection=array1&array2
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Intersection will equal all the correct responses, in this case, Cookie Monster.
+(<a href="http://stackoverflow.com/questions/5013880/ruby-compare-2-arrays-for-matches-and-count-the-number-of-match-instances" target="_blank">From Stack Overflow</a>)</p>
+
+<p>This method has two cousins. One is difference, which lets you &ldquo;subtract&rdquo; items from array1 that are also in array2:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>difference=array1-array2
+</span><span class='line'>difference= ["Big Bird", "Grover"] </span></code></pre></td></tr></table></div></figure>
+
+
+<p>The other is union, which concatenates the two arrays but removes duplicates:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>array | array2= ["Cookie Monster", "Big Bird", "Grover", "Snuffy", "Elmo"]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Puttering about the Internet a litte bit, I also found this<a href="http://blog.taian.su/201209/the-beauty-of-ruby-array-tricks-i/" target="_blank"> post in Japanese</a>. I could read only the code, but it&rsquo;s there that I discovered mass shuffling. For example,</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>array1&lt;&lt;"a horse"&lt;&lt; "a truck" = ["Cookie Monster", "Big Bird", "Grover", "a horse", "a truck"]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The final trick I learned lets you autogenerate an array of a range of numbers. To whit:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[*1..10] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] </span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Katie Barry Ishibashi</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-05T17:27:00-04:00" pubdate data-updated="true">Sep 5<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://katieishibashi.github.io/blog/2013/09/05/stupid-ruby-array-tricks/" data-via="" data-counturl="http://katieishibashi.github.io/blog/2013/09/05/stupid-ruby-array-tricks/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/08/01/why-is-code-in-english/" title="Previous Post: Why is Code in English?">&laquo; Why is Code in English?</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/09/05/stupid-ruby-array-tricks/">Stupid Ruby Array Tricks</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/01/why-is-code-in-english/">Why Is Code in English?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/11/8th-grade-math-and-navigating-the-globe/">8th Grade Math and Navigating the Globe</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/25/towing-mozilla/">Towing Mozilla</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/23/inside-a-sinatra-gem/">Inside a Sinatra Gem</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Katie Barry Ishibashi -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
