@@ -4,7 +4,7 @@
   <title><![CDATA[Katie on Rails]]></title>
   <link href="http://katieishibashi.github.io/atom.xml" rel="self"/>
   <link href="http://katieishibashi.github.io/"/>
-  <updated>2013-09-05T17:30:18-04:00</updated>
+  <updated>2013-09-05T17:33:33-04:00</updated>
   <id>http://katieishibashi.github.io/</id>
   <author>
     <name><![CDATA[Katie Barry Ishibashi]]></name>
@@ -20,8 +20,7 @@
     <id>http://katieishibashi.github.io/blog/2013/09/05/stupid-ruby-array-tricks</id>
     <content type="html"><![CDATA[<p>While checking out the <a href="http://onestepback.org/vital_testing/" target="_blank">Ruby katas</a>, I came across a puzzle that involved comparing two arrays, and was on the verge of writing long, convoluted if statements when it occurred to me that any language as elegant as Ruby must have better ways of doing things. Indeed it does. For example:</p>
 
-<h3>Check to see if 2 arrays have any matches, in 3ish lines of code</h3>
-
+<p><b>Check to see if 2 arrays have any matches, in 3ish lines of code</b></p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -32,7 +31,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Intersection will equal all the correct responses, in this case, Cookie Monster.
+<p><b>Intersection</b> will equal all the correct responses, in this case, Cookie Monster.
 (<a href="http://stackoverflow.com/questions/5013880/ruby-compare-2-arrays-for-matches-and-count-the-number-of-match-instances" target="_blank">From Stack Overflow</a>)</p>
 
 <p>This method has two cousins. One is difference, which lets you &ldquo;subtract&rdquo; items from array1 that are also in array2:</p>
@@ -43,16 +42,20 @@
 </span><span class='line'>difference= ["Big Bird", "Grover"] </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The other is union, which concatenates the two arrays but removes duplicates:</p>
+<p>The other is <b>union</b>, which concatenates the two arrays but removes duplicates:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>array | array2= ["Cookie Monster", "Big Bird", "Grover", "Snuffy", "Elmo"]</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>array | array2= 
+</span><span class='line'>["Cookie Monster", "Big Bird", "Grover", "Snuffy", "Elmo"]</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Puttering about the Internet a litte bit, I also found this<a href="http://blog.taian.su/201209/the-beauty-of-ruby-array-tricks-i/" target="_blank"> post in Japanese</a>. I could read only the code, but it&rsquo;s there that I discovered mass shuffling. For example,</p>
+<p>Puttering about the Internet a litte bit, I also found this<a href="http://blog.taian.su/201209/the-beauty-of-ruby-array-tricks-i/" target="_blank"> post in Japanese</a>. I could read only the code, but it&rsquo;s there that I discovered <b>mass shuffling</b>. For example,</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>array1&lt;&lt;"a horse"&lt;&lt; "a truck" = ["Cookie Monster", "Big Bird", "Grover", "a horse", "a truck"]</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>array1&lt;&lt;"a horse"&lt;&lt; "a truck" = 
+</span><span class='line'>["Cookie Monster", "Big Bird", "Grover", "a horse", "a truck"]</span></code></pre></td></tr></table></div></figure>
 
 
 <p>The final trick I learned lets you autogenerate an array of a range of numbers. To whit:</p>
