@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Awash in a DRY Ruby: Figuring Out a Roman Numeral Converter - Katie on Rails</title>
+  <meta name="author" content="Katie Barry Ishibashi">
+
+  
+  <meta name="description" content="Awash in a DRY Ruby: Figuring Out a Roman Numeral Converter I&rsquo;ve been doing the Ruby katas, and last week, I completed the Roman numeral &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://katieishibashi.github.io/blog/2013/09/14/awash-in-a-dry-ruby-figuring-out-a-roman-numeral-converter">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Katie on Rails" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Katie on Rails</a></h1>
+  
+    <h2>On Internets and other things</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:katieishibashi.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Awash in a DRY Ruby: Figuring Out a Roman Numeral Converter</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-14T17:45:00-04:00" pubdate data-updated="true">Sep 14<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Awash in a DRY Ruby: Figuring Out a Roman Numeral Converter</p>
+
+<p>I&rsquo;ve been doing the Ruby katas, and last week, I completed <a href="http://onestepback.org/vital_testing/" target="_blank">the Roman numeral calculator</a>, which tasks you with converting Arabic numbers to Roman numerals and vice versa. Upon completing the kata, I searched around for other answers. Imagine my surprise in finding <a href="http://rosettacode.org/wiki/Roman_numerals/Encode#Ruby">this Rosetta Code example</a>, which converts Arabic numbers to Roman in just a few lines of code:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Symbols = { 1=&gt;'I', 5=&gt;'V', 10=&gt;'X', 50=&gt;'L', 100=&gt;'C', 500=&gt;'D', 1000=&gt;'M' }
+</span><span class='line'>Subtractors = [ [1000, 100], [500, 100], [100, 10], [50, 10], [10, 1], [5, 1], [1, 0] ]
+</span><span class='line'> 
+</span><span class='line'>def roman(num)
+</span><span class='line'>  return Symbols[num]  if Symbols.has_key?(num)
+</span><span class='line'>  Subtractors.each do |cutPoint, subtractor| 
+</span><span class='line'>    return roman(cutPoint) + roman(num - cutPoint)      if num &gt;  cutPoint
+</span><span class='line'>    return roman(subtractor) + roman(num + subtractor)  if num &gt;= cutPoint - subtractor and num &lt; cutPoint
+</span><span class='line'>  end
+</span><span class='line'>end
+</span><span class='line'> 
+</span><span class='line'>[1990, 2008, 1666].each do |i|
+</span><span class='line'>  puts "%4d =&gt; %s" % [i, roman(i)]
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>My answer was, let us say&hellip;not that efficient. So I set out to understand how the more efficient answer works.</p>
+
+<p>All right. We start with a hash that matches up the standard associations (1=I, V=5, etc). We then pass these to the roman function below. The first line in the function delivers matches when a number exactly matches a symbol (i.e. x=10):</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>return Symbols[num]  if Symbols.has_key?(num)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The next lines deal with the more complicated cases. Most Roman numbers are compilations of several letters i.e. XV=10+5, 15. The trickier element is numbers like 4 are represented by placing the number to be subtracted by to the <em>left</em> of the larger number, i.e. IV= 5-1, 4. How, then is all this complexity dealt with in 4 lines of code?</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  Subtractors.each do |cutPoint, subtractor| 
+</span><span class='line'>    return roman(cutPoint) + roman(num - cutPoint)      if num &gt;  cutPoint
+</span><span class='line'>    return roman(subtractor) + roman(num + subtractor)  if num &gt;= cutPoint - subtractor and num &lt; cutPoint
+</span><span class='line'>  end
+</span><span class='line'>  ```
+</span><span class='line'>  By being recursive as all getout. The code begins by iterating through a series of arrays nested in the Subtractors array. The function refers to the first element of each nested array as a "cutPoint". The cutPoint represents the "normal" value (for example, 10). The second element indicates, referred to as the "subtractor", is the amount that number would have to be reduced by if a "reducing" letter appeared to its left (for example IX= 10-1, 9). Essentially, the function iterates through the array, and begins doing crazy recursive math as soon as it finds a number smaller than the cutPoint. Let's check it out with an example: 
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>  If I feed the number 11 into the function, this is what happens:
+</span><span class='line'>  The function sees that 11 isn't in the Symbols, and goes to the roman function. roman goes through its array of Subtractors, and finds that 11 is less than 10. It then does the following wizbang math:
+</span><span class='line'>  ```
+</span><span class='line'>  return roman(cutPoint) + roman(num - cutPoint)      if num &gt;  cutPoint
+</span><span class='line'>  ```
+</span><span class='line'>  By calling itself on itself, we get this:
+</span><span class='line'>  calling roman(cutPoint) will cause the first line,
+</span><span class='line'>  ```
+</span><span class='line'>  return Symbols[num]  if Symbols.has_key?(num)
+</span><span class='line'>  ```
+</span><span class='line'>  to look up the cutPoint, 10, in the Symbols hash. It will give us its value, X. We do this again when we want to add the X to the next line in the code, 
+</span><span class='line'>  ```
+</span><span class='line'>   roman(num - cutPoint)
+</span><span class='line'>   ```
+</span><span class='line'>   This calls the same function on 11-10, or 1. That gives us X+I, which is the correct Roman number value. Because the function keeps calling itself, and adding numerals, it also works for much larger numbers - i.e. 153 = CLIII. Most of our conversion is done with this line.
+</span><span class='line'>   So what's up with the second line of code? We're actually calling it every time, but it only runs when certain conditions are met: 
+</span><span class='line'>   ```
+</span><span class='line'>   num &gt;= cutPoint - subtractor and num &lt; cutPoint</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When do these conditions apply? Well, in the case of roman(4), we&rsquo;re iterating through our cutPoints. When we get to 5, our number, 4, flips the switch. 4>=(5-1) AND 4&lt;5. It&rsquo;s in this case only that the rest of the code runs:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>return roman(subtractor) + roman(num + subtractor)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>roman(1) gives us I, and roman(4+1)gives us V. Thus, we end up with XVI.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Katie Barry Ishibashi</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-14T17:45:00-04:00" pubdate data-updated="true">Sep 14<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://katieishibashi.github.io/blog/2013/09/14/awash-in-a-dry-ruby-figuring-out-a-roman-numeral-converter/" data-via="" data-counturl="http://katieishibashi.github.io/blog/2013/09/14/awash-in-a-dry-ruby-figuring-out-a-roman-numeral-converter/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/09/05/stupid-ruby-array-tricks/" title="Previous Post: Stupid Ruby Array Tricks">&laquo; Stupid Ruby Array Tricks</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/09/14/awash-in-a-dry-ruby-figuring-out-a-roman-numeral-converter/">Awash in a DRY Ruby: Figuring Out a Roman Numeral Converter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/05/stupid-ruby-array-tricks/">Stupid Ruby Array Tricks</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/01/why-is-code-in-english/">Why Is Code in English?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/11/8th-grade-math-and-navigating-the-globe/">8th Grade Math and Navigating the Globe</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/25/towing-mozilla/">Towing Mozilla</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Katie Barry Ishibashi -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
