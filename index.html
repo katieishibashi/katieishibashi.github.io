@@ -9,7 +9,7 @@
   <meta name="author" content="Katie Barry Ishibashi">
 
   
-  <meta name="description" content="Awash in a DRY Ruby: Figuring Out a Roman Numeral Converter I&rsquo;ve been doing the Ruby katas, and last week, I completed the Roman numeral &hellip;">
+  <meta name="description" content="I&rsquo;ve been doing the Ruby katas, and last week, I completed the Roman numeral calculator, which tasks you with converting Arabic numbers to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -94,9 +94,7 @@
   </header>
 
 
-  <div class="entry-content"><p>Awash in a DRY Ruby: Figuring Out a Roman Numeral Converter</p>
-
-<p>I&rsquo;ve been doing the Ruby katas, and last week, I completed <a href="http://onestepback.org/vital_testing/" target="_blank">the Roman numeral calculator</a>, which tasks you with converting Arabic numbers to Roman numerals and vice versa. Upon completing the kata, I searched around for other answers. Imagine my surprise in finding <a href="http://rosettacode.org/wiki/Roman_numerals/Encode#Ruby">this Rosetta Code example</a>, which converts Arabic numbers to Roman in just a few lines of code:</p>
+  <div class="entry-content"><p>I&rsquo;ve been doing the Ruby katas, and last week, I completed <a href="http://onestepback.org/vital_testing/" target="_blank">the Roman numeral calculator</a>, which tasks you with converting Arabic numbers to Roman numerals and vice versa. Upon completing the kata, I searched around for other answers. Imagine my surprise in finding <a href="http://rosettacode.org/wiki/Roman_numerals/Encode#Ruby">this Rosetta Code example</a>, which converts Arabic numbers to Roman in just a few lines of code:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -136,7 +134,7 @@
 </pre></td><td class='code'><pre><code class=''><span class='line'>return Symbols[num]  if Symbols.has_key?(num)</span></code></pre></td></tr></table></div></figure>
 
 
-<p>The next lines deal with the more complicated cases. Most Roman numbers are compilations of several letters i.e. XV=10+5, 15. The trickier element is numbers like 4 are represented by placing the number to be subtracted by to the <em>left</em> of the larger number, i.e. IV= 5-1, 4. How, then is all this complexity dealt with in 4 lines of code?</p>
+<p>This is actually how every Roman numeral gets assigned &ndash; when the function sees a number it has a letter for, i.e. 10=X, it assigns the correct letter. It&rsquo;s easy to see how this works with numbers like 10, but most Roman numbers are compilations of several letters i.e. XV=10+5, 15. To complicate matters, certain numbers, like 4, are represented by placing a smaller number to the <em>left</em> of a larger number, indicating that the reader should subtract by the smaller number. For example, IV= 5-1, 4. The function deals with all this logic in 4 lines of code:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -169,20 +167,20 @@
 </span><span class='line'>    return roman(subtractor) + roman(num + subtractor)  if num &gt;= cutPoint - subtractor and num &lt; cutPoint
 </span><span class='line'>  end
 </span><span class='line'>  ```
-</span><span class='line'>  By being recursive as all getout. The code begins by iterating through a series of arrays nested in the Subtractors array. The function refers to the first element of each nested array as a "cutPoint". The cutPoint represents the "normal" value (for example, 10). The second element indicates, referred to as the "subtractor", is the amount that number would have to be reduced by if a "reducing" letter appeared to its left (for example IX= 10-1, 9). Essentially, the function iterates through the array, and begins doing crazy recursive math as soon as it finds a number smaller than the cutPoint. Let's check it out with an example: 
+</span><span class='line'> It's recursive as all getout. The code begins by iterating through the series of arrays nested in the Subtractors array. The function refers to the first element of each nested array as a "cutPoint". The cutPoint represents the "normal" value (for example, 10). The second element indicates, referred to as the "subtractor", is the amount that number would have to be reduced by if a "reducing" letter appeared to its left (for example IX= 10-1, 9). Essentially, the function iterates through the array, and begins doing calling itself on itself as soon as it finds a number smaller than the cutPoint. Let's check it out with an example: 
 </span><span class='line'>
 </span><span class='line'>
 </span><span class='line'>  If I feed the number 11 into the function, this is what happens:
-</span><span class='line'>  The function sees that 11 isn't in the Symbols, and goes to the roman function. roman goes through its array of Subtractors, and finds that 11 is less than 10. It then does the following wizbang math:
+</span><span class='line'>  The function sees that 11 isn't in the Symbols, and goes on to the first line of the roman function. roman goes through its array of Subtractors, and finds that 11 is less than 10. It then does the following wizbang math:
 </span><span class='line'>  ```
 </span><span class='line'>  return roman(cutPoint) + roman(num - cutPoint)      if num &gt;  cutPoint
 </span><span class='line'>  ```
 </span><span class='line'>  By calling itself on itself, we get this:
-</span><span class='line'>  calling roman(cutPoint) will cause the first line,
+</span><span class='line'>  calling roman(cutPoint) will call the Roman numeral-assigning first line,
 </span><span class='line'>  ```
 </span><span class='line'>  return Symbols[num]  if Symbols.has_key?(num)
 </span><span class='line'>  ```
-</span><span class='line'>  to look up the cutPoint, 10, in the Symbols hash. It will give us its value, X. We do this again when we want to add the X to the next line in the code, 
+</span><span class='line'>  to look up the cutPoint, 10, in the Symbols hash. It will give us its value, X. We do this again when we want to add the I to the next line in the code, 
 </span><span class='line'>  ```
 </span><span class='line'>   roman(num - cutPoint)
 </span><span class='line'>   ```
@@ -192,13 +190,13 @@
 </span><span class='line'>   num &gt;= cutPoint - subtractor and num &lt; cutPoint</span></code></pre></td></tr></table></div></figure>
 
 
-<p>When do these conditions apply? Well, in the case of roman(4), we&rsquo;re iterating through our cutPoints. When we get to 5, our number, 4, flips the switch. 4>=(5-1) AND 4&lt;5. It&rsquo;s in this case only that the rest of the code runs:</p>
+<p>When do these conditions apply? Well, as luck would have it, only when we need to place a Roman numeral to the left. For example, the number 4 in roman numbers is IV. If we pass 4 into our function, it dutifully interates through cutPoints until it gets to 5. Using 5 and 4, we find that our number meets the criteria above and runs the code. 4>=(5-1) AND 4&lt;5. It&rsquo;s in this case only that the rest of the code runs:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>return roman(subtractor) + roman(num + subtractor)</span></code></pre></td></tr></table></div></figure>
 
 
-<p>roman(1) gives us I, and roman(4+1)gives us V. Thus, we end up with XVI.</p>
+<p>roman(1) gives us I, and roman(4+1)gives us V. Thus, we end up with IV.</p>
 </div>
   
   
