@@ -9,7 +9,7 @@
   <meta name="author" content="Katie Barry Ishibashi">
 
   
-  <meta name="description" content="I&rsquo;ve been doing the Ruby katas, and last week, I completed the Roman numeral calculator, which tasks you with converting Arabic numbers to &hellip;">
+  <meta name="description" content="I was recently working through a series of coding puzzles, and came across one that asks you to write a function that takes a string and produces &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,76 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/17/one-more-ruby-array-trick/">One More Ruby Array Trick</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-17T16:15:00-04:00" pubdate data-updated="true">Sep 17<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I was recently working through a series of coding puzzles, and came across one that asks you to write a function that takes a string and produces every possible permutation of its letters. So &ldquo;abc&rdquo; could be &ldquo;abc&rdquo;, &ldquo;acb&rdquo;, &ldquo;bac&rdquo;, &ldquo;bca&rdquo;, &ldquo;cab&rdquo;, &ldquo;cba&rdquo;. The book where I found the puzzle had an example of how to solve the problem in Java:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>void permute( String str ){
+</span><span class='line'>int length = str.length(); boolean[] used = new boolean[ length ]; StringBuffer out = new StringBuffer(); char[] in = str.toCharArray();
+</span><span class='line'>doPermute( in, out, used, length, 0 ); }
+</span><span class='line'>void doPermute( char[] in, StringBuffer out,
+</span><span class='line'>boolean[] used, int length, int level ){
+</span><span class='line'>if( level == length ){ System.out.println( out.toString() ); return;
+</span><span class='line'>}
+</span><span class='line'>for( int i = 0; i &lt; length; ++i ){ if( used[i] ) continue;
+</span><span class='line'>out.append( in[i] );
+</span><span class='line'>used[i] = true;
+</span><span class='line'>doPermute( in, out, used, length, level + 1 ); used[i] = false;
+</span><span class='line'>out.setLength( out.length() - 1 );
+</span><span class='line'>} }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I was halfway through working through the problem in Ruby, when it occurred to me that Ruby might have an easier way of doing things. It does. It has a permutate method that allows us to solve the problem with one line of code. Behold:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>%w[a b c].permutation.map &:join</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -674,42 +744,6 @@ Taking major coding detours as an individual is bad enough, but taking an irrele
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/06/05/goat-cheese/">Goat Cheese</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-05T13:07:00-04:00" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -725,6 +759,10 @@ Taking major coding detours as an individual is bad enough, but taking an irrele
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/09/17/one-more-ruby-array-trick/">One More Ruby Array Trick</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/09/14/awash-in-a-dry-ruby-figuring-out-a-roman-numeral-converter/">Awash in a DRY Ruby: Figuring Out a Roman Numeral Converter</a>
       </li>
     
@@ -738,10 +776,6 @@ Taking major coding detours as an individual is bad enough, but taking an irrele
     
       <li class="post">
         <a href="/blog/2013/07/11/8th-grade-math-and-navigating-the-globe/">8th Grade Math and Navigating the Globe</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/25/towing-mozilla/">Towing Mozilla</a>
       </li>
     
   </ul>
